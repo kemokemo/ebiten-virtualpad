@@ -80,8 +80,9 @@ func (d *directionalButton) SelectButton(selected bool) {
 func (d *directionalButton) Draw(screen *ebiten.Image) {
 	if d.selected {
 		screen.DrawImage(d.baseImg, d.selectedOp)
+	} else {
+		screen.DrawImage(d.baseImg, d.normalOp)
 	}
-	screen.DrawImage(d.baseImg, d.normalOp)
 }
 
 func (d *directionalButton) GetRectangle() image.Rectangle {

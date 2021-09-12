@@ -84,6 +84,7 @@ func (b *JustReleaseButton) IsTriggered() bool {
 func (b *JustReleaseButton) Draw(screen *ebiten.Image) {
 	if b.isSelected {
 		screen.DrawImage(b.baseImg, b.selectedOp)
+	} else {
+		screen.DrawImage(b.baseImg, b.normalOp)
 	}
-	screen.DrawImage(b.baseImg, b.normalOp)
 }
