@@ -1,6 +1,8 @@
 package vpad
 
 import (
+	"image/color"
+
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -13,23 +15,23 @@ type DirectionalPad struct {
 }
 
 // NewDirectionalPad returns a new DirectionalPad.
-func NewDirectionalPad(pad, button *ebiten.Image) DirectionalPad {
+func NewDirectionalPad(pad, button *ebiten.Image, cl color.RGBA) DirectionalPad {
 	dp := DirectionalPad{
 		baseImg: pad,
 		op:      &ebiten.DrawImageOptions{},
 	}
-	dp.createButtons(button)
+	dp.createButtons(button, cl)
 	return dp
 }
 
-func (dp *DirectionalPad) createButtons(img *ebiten.Image) {
+func (dp *DirectionalPad) createButtons(img *ebiten.Image, cl color.RGBA) {
 	if dp.buttons == nil {
 		dp.buttons = make(map[Direction]*directionalButton, 4)
 	}
 
 	ds := []Direction{Left, Upper, Right, Lower}
 	for _, direc := range ds {
-		b := newDirectionalButton(img, direc)
+		b := newDirectionalButton(img, direc, cl)
 		dp.buttons[direc] = b
 	}
 }

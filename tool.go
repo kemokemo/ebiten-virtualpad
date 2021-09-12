@@ -7,6 +7,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+var SelectColor = color.RGBA{0, 49, 102, 210}
+
 func colorScale(clr color.Color) (rf, gf, bf, af float64) {
 	r, g, b, a := clr.RGBA()
 	if a == 0 {

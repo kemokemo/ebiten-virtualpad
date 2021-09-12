@@ -2,15 +2,10 @@ package vpad
 
 import (
 	"image"
+	"image/color"
 	"math"
 
-	"image/color"
-
 	"github.com/hajimehoshi/ebiten/v2"
-)
-
-var (
-	selectColor = color.RGBA{0, 148, 255, 255}
 )
 
 // directionalButton is the button of the directional pad.
@@ -24,7 +19,7 @@ type directionalButton struct {
 }
 
 // newDirectionalButton returns a new DirectionalButton.
-func newDirectionalButton(img *ebiten.Image, direc Direction) *directionalButton {
+func newDirectionalButton(img *ebiten.Image, direc Direction, cl color.RGBA) *directionalButton {
 	d := &directionalButton{
 		baseImg:   img,
 		direction: direc,
@@ -42,7 +37,7 @@ func newDirectionalButton(img *ebiten.Image, direc Direction) *directionalButton
 
 	d.selectedOp = &ebiten.DrawImageOptions{}
 	d.selectedOp.GeoM.Concat(d.normalOp.GeoM)
-	d.selectedOp.ColorM.Scale(colorScale(selectColor))
+	d.selectedOp.ColorM.Scale(colorScale(cl))
 
 	return d
 }

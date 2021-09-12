@@ -24,9 +24,10 @@ type TriggerButton interface {
 }
 
 // NewTriggerButton returns a new TriggerButton.
-func NewTriggerButton(img *ebiten.Image, tt TriggerType) TriggerButton {
+func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerButton {
 	sop := &ebiten.DrawImageOptions{}
-	sop.ColorM.Scale(colorScale(color.RGBA{0, 148, 255, 255}))
+	sop.ColorM.Scale(colorScale(cl))
+
 	switch tt {
 	case JustRelease:
 		return &JustReleaseButton{
