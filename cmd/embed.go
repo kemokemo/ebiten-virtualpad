@@ -17,6 +17,9 @@ var (
 	//go:embed images/b_button.png
 	b_button_png []byte
 
+	//go:embed images/c_button.png
+	c_button_png []byte
+
 	//go:embed images/directional_button.png
 	directional_button_png []byte
 
@@ -35,6 +38,7 @@ func loadSingleImage(b []byte) (*ebiten.Image, error) {
 var (
 	a_button           *ebiten.Image
 	b_button           *ebiten.Image
+	c_button           *ebiten.Image
 	directional_button *ebiten.Image
 	directional_pad    *ebiten.Image
 )
@@ -44,21 +48,26 @@ func init() {
 
 	a_button, err = loadSingleImage(a_button_png)
 	if err != nil {
-		log.Println("failed to laod image: ", err)
+		log.Println("failed to load image: ", err)
 	}
 
 	b_button, err = loadSingleImage(b_button_png)
 	if err != nil {
-		log.Println("failed to laod image: ", err)
+		log.Println("failed to load image: ", err)
+	}
+
+	c_button, err = loadSingleImage(c_button_png)
+	if err != nil {
+		log.Println("failed to load image: ", err)
 	}
 
 	directional_button, err = loadSingleImage(directional_button_png)
 	if err != nil {
-		log.Println("failed to laod image: ", err)
+		log.Println("failed to load image: ", err)
 	}
 
 	directional_pad, err = loadSingleImage(directional_pad_png)
 	if err != nil {
-		log.Println("failed to laod image: ", err)
+		log.Println("failed to load image: ", err)
 	}
 }

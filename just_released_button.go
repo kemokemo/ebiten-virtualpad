@@ -7,9 +7,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-// JustReleaseButton is implementation of the TriggerButton to be
+// JustReleasedButton is implementation of the TriggerButton to be
 // triggered when just released.
-type JustReleaseButton struct {
+type JustReleasedButton struct {
 	baseImg     *ebiten.Image
 	normalOp    *ebiten.DrawImageOptions
 	selectedOp  *ebiten.DrawImageOptions
@@ -20,7 +20,7 @@ type JustReleaseButton struct {
 }
 
 // SetLocation sets the location to draw this button.
-func (b *JustReleaseButton) SetLocation(x, y int) {
+func (b *JustReleasedButton) SetLocation(x, y int) {
 	w, h := b.baseImg.Size()
 	b.rectangle = image.Rect(x, y, x+w, y+h)
 
@@ -30,12 +30,12 @@ func (b *JustReleaseButton) SetLocation(x, y int) {
 
 // Update updates the internal state of this button.
 // Please call this before using IsTriggered method.
-func (b *JustReleaseButton) Update() {
+func (b *JustReleasedButton) Update() {
 	b.updateSelect()
 	b.updateTrigger()
 }
 
-func (b *JustReleaseButton) updateSelect() {
+func (b *JustReleasedButton) updateSelect() {
 	b.isSelected = false
 
 	IDs := ebiten.TouchIDs()
@@ -51,7 +51,7 @@ func (b *JustReleaseButton) updateSelect() {
 	}
 }
 
-func (b *JustReleaseButton) updateTrigger() {
+func (b *JustReleasedButton) updateTrigger() {
 	b.isTriggered = false
 
 	IDs := inpututil.JustPressedTouchIDs()
@@ -76,12 +76,12 @@ func (b *JustReleaseButton) updateTrigger() {
 
 // IsTriggered returns the state of this trigger is pressed.
 // If result is 'true', this is pressed now.
-func (b *JustReleaseButton) IsTriggered() bool {
+func (b *JustReleasedButton) IsTriggered() bool {
 	return b.isTriggered
 }
 
 // Draw draws this button.
-func (b *JustReleaseButton) Draw(screen *ebiten.Image) {
+func (b *JustReleasedButton) Draw(screen *ebiten.Image) {
 	if b.isSelected {
 		screen.DrawImage(b.baseImg, b.selectedOp)
 	} else {

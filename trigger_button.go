@@ -6,21 +6,11 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-// TriggerType is the type for the TriggerButton.
-type TriggerType int
-
-const (
-	// JustRelease is the button to be triggered when just released only.
-	JustRelease TriggerType = iota
-	// Pressing is the button to be triggered during pressed every frame
-	Pressing
-)
-
 type TriggerButton interface {
 	SetLocation(x, y int)
 	Update()
 	IsTriggered() bool
-	Draw(*ebiten.Image)
+	Draw(screen *ebiten.Image)
 }
 
 // NewTriggerButton returns a new TriggerButton.
@@ -29,8 +19,8 @@ func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerB
 	sop.ColorM.Scale(colorScale(cl))
 
 	switch tt {
-	case JustRelease:
-		return &JustReleaseButton{
+	case JustReleased:
+		return &JustReleasedButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
@@ -38,6 +28,12 @@ func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerB
 		}
 	case Pressing:
 		return &PressingButton{
+			baseImg:    img,
+			normalOp:   &ebiten.DrawImageOptions{},
+			selectedOp: sop,
+		}
+	case JustPressed:
+		return &JustPressedButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,

@@ -13,29 +13,35 @@ const (
 
 func NewGame() *Game {
 	dpad := vpad.NewDirectionalPad(directional_pad, directional_button, vpad.SelectColor)
-	dpad.SetLocation(20, 180)
+	dpad.SetLocation(10, 180)
 
 	// vpad.Pressing is continuously triggered while this button is being pressed.
 	aButton := vpad.NewTriggerButton(a_button, vpad.Pressing, vpad.SelectColor)
-	aButton.SetLocation(260, 190)
+	aButton.SetLocation(150, 190)
 
 	// vpad.JustRelease is triggered when this button is released.
-	bButton := vpad.NewTriggerButton(b_button, vpad.JustRelease, vpad.SelectColor)
-	bButton.SetLocation(370, 190)
+	bButton := vpad.NewTriggerButton(b_button, vpad.JustReleased, vpad.SelectColor)
+	bButton.SetLocation(260, 190)
 
-	return &Game{dpad: dpad, aButton: aButton, bButton: bButton}
+	// vpad.JustPress is triggered when this button is pressed.
+	cButton := vpad.NewTriggerButton(c_button, vpad.JustPressed, vpad.SelectColor)
+	cButton.SetLocation(370, 190)
+
+	return &Game{dpad: dpad, aButton: aButton, bButton: bButton, cButton: cButton}
 }
 
 type Game struct {
 	dpad    vpad.DirectionalPad
 	aButton vpad.TriggerButton
 	bButton vpad.TriggerButton
+	cButton vpad.TriggerButton
 }
 
 func (g *Game) Update() error {
 	g.dpad.Update()
 	g.aButton.Update()
 	g.bButton.Update()
+	g.cButton.Update()
 
 	return nil
 }
@@ -64,6 +70,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		ebitenutil.DebugPrintAt(screen, "B button is triggered.", 20, 50)
 	}
 
+	g.cButton.Draw(screen)
+	if g.cButton.IsTriggered() {
+		ebitenutil.DebugPrintAt(screen, "C button is triggered.", 20, 50)
+	}
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
