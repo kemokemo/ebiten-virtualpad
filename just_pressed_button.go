@@ -15,6 +15,7 @@ type JustPressedButton struct {
 	isSelected  bool
 	isTriggered bool
 	checkP      image.Point
+	cursP       image.Point
 }
 
 func (b *JustPressedButton) SetLocation(x int, y int) {
@@ -24,6 +25,7 @@ func (b *JustPressedButton) SetLocation(x int, y int) {
 	b.normalOp.GeoM.Translate(float64(x), float64(y))
 	b.selectedOp.GeoM.Concat(b.normalOp.GeoM)
 	b.checkP = image.Point{}
+	b.cursP = image.Point{}
 }
 
 func (b *JustPressedButton) Update() {
@@ -41,6 +43,12 @@ func (b *JustPressedButton) updateSelect() {
 			return
 		}
 	}
+
+	b.cursP.X, b.cursP.Y = ebiten.CursorPosition()
+	if b.cursP.In(b.rectangle) && inpututil.MouseButtonPressDuration(ebiten.MouseButtonLeft) > 0 {
+		b.isSelected = true
+		return
+	}
 }
 
 func (b *JustPressedButton) updateTrigger() {
@@ -53,6 +61,12 @@ func (b *JustPressedButton) updateTrigger() {
 			b.isTriggered = true
 			return
 		}
+	}
+
+	b.cursP.X, b.cursP.Y = ebiten.CursorPosition()
+	if b.cursP.In(b.rectangle) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		b.isTriggered = true
+		return
 	}
 }
 
