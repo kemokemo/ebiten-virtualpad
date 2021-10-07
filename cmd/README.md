@@ -4,7 +4,11 @@ This is a sample application using [ebiten-virtualpad](https://github.com/kemoke
 
 ![vpad-sample](media/vpad-sample.png)
 
-## Build
+## Build and Run
+
+```sh
+go run *.go
+```
 
 ```sh
 gomobile install github.com/kemokemo/ebiten-virtualpad/cmd

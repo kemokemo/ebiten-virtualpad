@@ -9,7 +9,7 @@ import (
 func main() {
 	g := NewGame()
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
-	ebiten.SetWindowTitle("Animation (Ebiten Demo)")
+	ebiten.SetWindowTitle("Virtual GamePad Demo App for Ebiten")
 	if err := ebiten.RunGame(g); err != nil {
 		log.Fatal(err)
 	}
