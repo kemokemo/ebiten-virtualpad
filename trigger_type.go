@@ -4,10 +4,10 @@ package vpad
 type TriggerType int
 
 const (
-	// JustRelease is triggered only when just released.
-	JustRelease TriggerType = iota
+	// JustReleased is triggered only when just released.
+	JustReleased TriggerType = iota
 	// Pressing is triggered while this is being pressed.
 	Pressing
-	// JustPress is triggered only when just pressed.
-	JustPress
+	// JustPressed is triggered only when just pressed.
+	JustPressed
 )

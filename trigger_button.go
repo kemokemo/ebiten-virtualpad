@@ -19,8 +19,8 @@ func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerB
 	sop.ColorM.Scale(colorScale(cl))
 
 	switch tt {
-	case JustRelease:
-		return &JustReleaseButton{
+	case JustReleased:
+		return &JustReleasedButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
@@ -32,7 +32,7 @@ func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerB
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
 		}
-	case JustPress:
+	case JustPressed:
 		return &JustPressedButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},

@@ -20,11 +20,11 @@ func NewGame() *Game {
 	aButton.SetLocation(150, 190)
 
 	// vpad.JustRelease is triggered when this button is released.
-	bButton := vpad.NewTriggerButton(b_button, vpad.JustRelease, vpad.SelectColor)
+	bButton := vpad.NewTriggerButton(b_button, vpad.JustReleased, vpad.SelectColor)
 	bButton.SetLocation(260, 190)
 
 	// vpad.JustPress is triggered when this button is pressed.
-	cButton := vpad.NewTriggerButton(c_button, vpad.JustPress, vpad.SelectColor)
+	cButton := vpad.NewTriggerButton(c_button, vpad.JustPressed, vpad.SelectColor)
 	cButton.SetLocation(370, 190)
 
 	return &Game{dpad: dpad, aButton: aButton, bButton: bButton, cButton: cButton}
