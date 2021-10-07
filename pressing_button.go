@@ -16,6 +16,7 @@ type PressingButton struct {
 	rectangle   image.Rectangle
 	isSelected  bool
 	isTriggered bool
+	checkP      image.Point
 	cursP       image.Point
 }
 
@@ -26,6 +27,7 @@ func (b *PressingButton) SetLocation(x, y int) {
 
 	b.normalOp.GeoM.Translate(float64(x), float64(y))
 	b.selectedOp.GeoM.Concat(b.normalOp.GeoM)
+	b.checkP = image.Point{}
 	b.cursP = image.Point{}
 }
 
@@ -39,13 +41,11 @@ func (b *PressingButton) Update() {
 func (b *PressingButton) updateSelect() {
 	b.isSelected = false
 
-	IDs := ebiten.TouchIDs()
-	if len(IDs) >= 0 {
-		for i := range IDs {
-			if isTouched(IDs[i], b.rectangle) {
-				b.isSelected = true
-				return
-			}
+	for _, tID := range ebiten.TouchIDs() {
+		b.checkP.X, b.checkP.Y = ebiten.TouchPosition(tID)
+		if b.checkP.In(b.rectangle) {
+			b.isSelected = true
+			return
 		}
 	}
 
@@ -58,10 +58,11 @@ func (b *PressingButton) updateSelect() {
 
 func (b *PressingButton) updateTrigger() {
 	b.isTriggered = false
-	IDs := ebiten.TouchIDs()
-	if len(IDs) == 0 {
-		for i := range IDs {
-			if isTouched(IDs[i], b.rectangle) {
+
+	for _, tID := range ebiten.TouchIDs() {
+		if inpututil.TouchPressDuration(tID) > 0 {
+			b.checkP.X, b.checkP.Y = ebiten.TouchPosition(tID)
+			if b.checkP.In(b.rectangle) {
 				b.isTriggered = true
 				return
 			}
