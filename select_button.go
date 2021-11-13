@@ -6,34 +6,31 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type TriggerButton interface {
+type SelectButton interface {
 	SetLocation(x, y int)
 	Update()
-	IsTriggered() bool
+	IsSelected() bool
 	Draw(screen *ebiten.Image)
+	SetSelectState(selected bool)
 }
 
-// NewTriggerButton returns a new TriggerButton.
-func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerButton {
+// NewSelectButton returns a new SelectButton.
+// Argument 'TriggerType' specifies the operation for which this button will be selected.
+// Only 'JustReleased' and 'JustPressed' are available. If you specify others, this func returns nil.
+func NewSelectButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) SelectButton {
 	sop := &ebiten.DrawImageOptions{}
 	sop.ColorM.Scale(colorScale(cl))
 
 	switch tt {
 	case JustReleased:
-		return &justReleasedButton{
+		return &justReleasedSelectButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
 			touches:    make(map[*touch]struct{}),
 		}
-	case Pressing:
-		return &pressingButton{
-			baseImg:    img,
-			normalOp:   &ebiten.DrawImageOptions{},
-			selectedOp: sop,
-		}
 	case JustPressed:
-		return &justPressedButton{
+		return &justPressedSelectButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
