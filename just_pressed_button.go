@@ -7,7 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-type JustPressedButton struct {
+type justPressedButton struct {
 	baseImg     *ebiten.Image
 	normalOp    *ebiten.DrawImageOptions
 	selectedOp  *ebiten.DrawImageOptions
@@ -18,7 +18,7 @@ type JustPressedButton struct {
 	cursP       image.Point
 }
 
-func (b *JustPressedButton) SetLocation(x int, y int) {
+func (b *justPressedButton) SetLocation(x int, y int) {
 	w, h := b.baseImg.Size()
 	b.rectangle = image.Rect(x, y, x+w, y+h)
 
@@ -28,12 +28,12 @@ func (b *JustPressedButton) SetLocation(x int, y int) {
 	b.cursP = image.Point{}
 }
 
-func (b *JustPressedButton) Update() {
+func (b *justPressedButton) Update() {
 	b.updateSelect()
 	b.updateTrigger()
 }
 
-func (b *JustPressedButton) updateSelect() {
+func (b *justPressedButton) updateSelect() {
 	b.isSelected = false
 
 	for _, tID := range ebiten.TouchIDs() {
@@ -51,7 +51,7 @@ func (b *JustPressedButton) updateSelect() {
 	}
 }
 
-func (b *JustPressedButton) updateTrigger() {
+func (b *justPressedButton) updateTrigger() {
 	b.isTriggered = false
 
 	// JustPressed!
@@ -70,11 +70,11 @@ func (b *JustPressedButton) updateTrigger() {
 	}
 }
 
-func (b *JustPressedButton) IsTriggered() bool {
+func (b *justPressedButton) IsTriggered() bool {
 	return b.isTriggered
 }
 
-func (b *JustPressedButton) Draw(screen *ebiten.Image) {
+func (b *justPressedButton) Draw(screen *ebiten.Image) {
 	if b.isSelected {
 		screen.DrawImage(b.baseImg, b.selectedOp)
 	} else {
