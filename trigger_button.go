@@ -20,20 +20,20 @@ func NewTriggerButton(img *ebiten.Image, tt TriggerType, cl color.RGBA) TriggerB
 
 	switch tt {
 	case JustReleased:
-		return &justReleasedButton{
+		return &JustReleasedButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
 			touches:    make(map[*touch]struct{}),
 		}
 	case Pressing:
-		return &pressingButton{
+		return &PressingButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
 		}
 	case JustPressed:
-		return &justPressedButton{
+		return &JustPressedButton{
 			baseImg:    img,
 			normalOp:   &ebiten.DrawImageOptions{},
 			selectedOp: sop,
