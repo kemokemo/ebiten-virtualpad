@@ -7,9 +7,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-// PressingButton is implementation of the TriggerButton to be
+// pressingButton is implementation of the TriggerButton to be
 // triggered during being pressed.
-type PressingButton struct {
+type pressingButton struct {
 	baseImg     *ebiten.Image
 	normalOp    *ebiten.DrawImageOptions
 	selectedOp  *ebiten.DrawImageOptions
@@ -21,7 +21,7 @@ type PressingButton struct {
 }
 
 // SetLocation sets the location to draw this button.
-func (b *PressingButton) SetLocation(x, y int) {
+func (b *pressingButton) SetLocation(x, y int) {
 	w, h := b.baseImg.Size()
 	b.rectangle = image.Rect(x, y, x+w, y+h)
 
@@ -33,12 +33,12 @@ func (b *PressingButton) SetLocation(x, y int) {
 
 // Update updates the internal state of this button.
 // Please call this before using IsTriggered method.
-func (b *PressingButton) Update() {
+func (b *pressingButton) Update() {
 	b.updateSelect()
 	b.updateTrigger()
 }
 
-func (b *PressingButton) updateSelect() {
+func (b *pressingButton) updateSelect() {
 	b.isSelected = false
 
 	for _, tID := range ebiten.TouchIDs() {
@@ -56,7 +56,7 @@ func (b *PressingButton) updateSelect() {
 	}
 }
 
-func (b *PressingButton) updateTrigger() {
+func (b *pressingButton) updateTrigger() {
 	b.isTriggered = false
 
 	for _, tID := range ebiten.TouchIDs() {
@@ -78,12 +78,12 @@ func (b *PressingButton) updateTrigger() {
 
 // IsTriggered returns the state of this trigger is pressed.
 // If result is 'true', this is pressed now.
-func (b *PressingButton) IsTriggered() bool {
+func (b *pressingButton) IsTriggered() bool {
 	return b.isTriggered
 }
 
 // Draw draws this button.
-func (b *PressingButton) Draw(screen *ebiten.Image) {
+func (b *pressingButton) Draw(screen *ebiten.Image) {
 	if b.isSelected {
 		screen.DrawImage(b.baseImg, b.selectedOp)
 	} else {
