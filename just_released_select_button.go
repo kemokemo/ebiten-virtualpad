@@ -36,21 +36,27 @@ func (b *justReleasedSelectButton) Update() {
 }
 
 func (b *justReleasedSelectButton) updateSelect() {
-	b.isSelected = false
+	IDs := inpututil.JustPressedTouchIDs()
+	if len(IDs) != 0 {
+		for _, id := range IDs {
+			b.touches[&touch{id: id}] = struct{}{}
+		}
+	}
 
-	IDs := ebiten.TouchIDs()
-	if len(IDs) >= 0 {
-		for i := range IDs {
-			if isTouched(IDs[i], b.rectangle) {
-				b.isSelected = true
-				return
+	for t := range b.touches {
+		t.Update()
+		if t.IsReleased() {
+			delete(b.touches, t)
+			in := image.Point{t.x, t.y}.In(b.rectangle)
+			if in {
+				b.isSelected = !b.isSelected
 			}
 		}
 	}
 
 	b.cursP.X, b.cursP.Y = ebiten.CursorPosition()
 	if b.cursP.In(b.rectangle) && inpututil.MouseButtonPressDuration(ebiten.MouseButtonLeft) > 0 {
-		b.isSelected = true
+		b.isSelected = !b.isSelected
 		return
 	}
 }

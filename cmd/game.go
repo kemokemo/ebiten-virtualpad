@@ -27,21 +27,38 @@ func NewGame() *Game {
 	cButton := vpad.NewTriggerButton(c_button, vpad.JustPressed, vpad.SelectColor)
 	cButton.SetLocation(370, 190)
 
-	return &Game{dpad: dpad, aButton: aButton, bButton: bButton, cButton: cButton}
+	slButton := vpad.NewSelectButton(c_button, vpad.JustReleased, vpad.SelectColor)
+	slButton.SetLocation(205, 90)
+
+	srButton := vpad.NewSelectButton(c_button, vpad.JustPressed, vpad.SelectColor)
+	srButton.SetLocation(315, 90)
+
+	return &Game{
+		dpad:                     dpad,
+		pressingButton:           aButton,
+		justReleasedButton:       bButton,
+		justPressedButton:        cButton,
+		justReleasedSelectButton: slButton,
+		justPressedSelectButton:  srButton,
+	}
 }
 
 type Game struct {
-	dpad    vpad.DirectionalPad
-	aButton vpad.TriggerButton
-	bButton vpad.TriggerButton
-	cButton vpad.TriggerButton
+	dpad                     vpad.DirectionalPad
+	pressingButton           vpad.TriggerButton
+	justReleasedButton       vpad.TriggerButton
+	justPressedButton        vpad.TriggerButton
+	justReleasedSelectButton vpad.SelectButton
+	justPressedSelectButton  vpad.SelectButton
 }
 
 func (g *Game) Update() error {
 	g.dpad.Update()
-	g.aButton.Update()
-	g.bButton.Update()
-	g.cButton.Update()
+	g.pressingButton.Update()
+	g.justReleasedButton.Update()
+	g.justPressedButton.Update()
+	g.justReleasedSelectButton.Update()
+	g.justPressedSelectButton.Update()
 
 	return nil
 }
@@ -60,19 +77,29 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		ebitenutil.DebugPrintAt(screen, "Right direction", 20, 20)
 	}
 
-	g.aButton.Draw(screen)
-	if g.aButton.IsTriggered() {
+	g.pressingButton.Draw(screen)
+	if g.pressingButton.IsTriggered() {
 		ebitenutil.DebugPrintAt(screen, "A button is being triggered.", 20, 50)
 	}
 
-	g.bButton.Draw(screen)
-	if g.bButton.IsTriggered() {
+	g.justReleasedButton.Draw(screen)
+	if g.justReleasedButton.IsTriggered() {
 		ebitenutil.DebugPrintAt(screen, "B button is triggered.", 20, 50)
 	}
 
-	g.cButton.Draw(screen)
-	if g.cButton.IsTriggered() {
+	g.justPressedButton.Draw(screen)
+	if g.justPressedButton.IsTriggered() {
 		ebitenutil.DebugPrintAt(screen, "C button is triggered.", 20, 50)
+	}
+
+	g.justReleasedSelectButton.Draw(screen)
+	if g.justReleasedSelectButton.IsSelected() {
+		ebitenutil.DebugPrintAt(screen, "L button is being selected.", 20, 70)
+	}
+
+	g.justPressedSelectButton.Draw(screen)
+	if g.justPressedSelectButton.IsSelected() {
+		ebitenutil.DebugPrintAt(screen, "R button is being selected.", 200, 70)
 	}
 }
 

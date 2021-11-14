@@ -32,19 +32,17 @@ func (b *justPressedSelectButton) Update() {
 }
 
 func (b *justPressedSelectButton) updateSelect() {
-	b.isSelected = false
-
-	for _, tID := range ebiten.TouchIDs() {
+	for _, tID := range inpututil.JustPressedTouchIDs() {
 		b.checkP.X, b.checkP.Y = ebiten.TouchPosition(tID)
 		if b.checkP.In(b.rectangle) {
-			b.isSelected = true
+			b.isSelected = !b.isSelected
 			return
 		}
 	}
 
 	b.cursP.X, b.cursP.Y = ebiten.CursorPosition()
 	if b.cursP.In(b.rectangle) && inpututil.MouseButtonPressDuration(ebiten.MouseButtonLeft) > 0 {
-		b.isSelected = true
+		b.isSelected = !b.isSelected
 		return
 	}
 }
