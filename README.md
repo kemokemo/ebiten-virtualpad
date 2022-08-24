@@ -105,7 +105,7 @@ The following types of TriggerButtons are currently available.
 |Pressing|This is triggered while this is being pressed.|
 |JustPressed|This is triggered only when just pressed.|
 
-## Licence
+## License
 
 Apache-2.0 License
 
