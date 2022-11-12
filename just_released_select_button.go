@@ -55,7 +55,7 @@ func (b *justReleasedSelectButton) updateSelect() {
 	}
 
 	b.cursP.X, b.cursP.Y = ebiten.CursorPosition()
-	if b.cursP.In(b.rectangle) && inpututil.MouseButtonPressDuration(ebiten.MouseButtonLeft) > 0 {
+	if b.cursP.In(b.rectangle) && inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
 		b.isSelected = !b.isSelected
 		return
 	}
