@@ -15,6 +15,7 @@ type justPressedSelectButton struct {
 	isSelected bool
 	checkP     image.Point
 	cursP      image.Point
+	keys       []ebiten.Key
 }
 
 func (b *justPressedSelectButton) SetLocation(x int, y int) {
@@ -45,6 +46,13 @@ func (b *justPressedSelectButton) updateSelect() {
 		b.isSelected = !b.isSelected
 		return
 	}
+
+	for i := range b.keys {
+		if inpututil.IsKeyJustPressed(b.keys[i]) {
+			b.isSelected = !b.isSelected
+			return
+		}
+	}
 }
 
 func (b *justPressedSelectButton) IsSelected() bool {
@@ -53,6 +61,10 @@ func (b *justPressedSelectButton) IsSelected() bool {
 
 func (b *justPressedSelectButton) SetSelectState(selected bool) {
 	b.isSelected = selected
+}
+
+func (b *justPressedSelectButton) SetSelectKeys(keys []ebiten.Key) {
+	b.keys = keys
 }
 
 func (b *justPressedSelectButton) Draw(screen *ebiten.Image) {

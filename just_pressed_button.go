@@ -16,6 +16,7 @@ type justPressedButton struct {
 	isTriggered bool
 	checkP      image.Point
 	cursP       image.Point
+	keys        []ebiten.Key
 }
 
 func (b *justPressedButton) SetLocation(x int, y int) {
@@ -49,6 +50,13 @@ func (b *justPressedButton) updateSelect() {
 		b.isSelected = true
 		return
 	}
+
+	for i := range b.keys {
+		if inpututil.KeyPressDuration(b.keys[i]) > 0 {
+			b.isSelected = true
+			return
+		}
+	}
 }
 
 func (b *justPressedButton) updateTrigger() {
@@ -68,6 +76,13 @@ func (b *justPressedButton) updateTrigger() {
 		b.isTriggered = true
 		return
 	}
+
+	for i := range b.keys {
+		if inpututil.IsKeyJustPressed(b.keys[i]) {
+			b.isTriggered = true
+			return
+		}
+	}
 }
 
 func (b *justPressedButton) IsTriggered() bool {
@@ -80,4 +95,8 @@ func (b *justPressedButton) Draw(screen *ebiten.Image) {
 	} else {
 		screen.DrawImage(b.baseImg, b.normalOp)
 	}
+}
+
+func (b *justPressedButton) SetTriggerButton(keys []ebiten.Key) {
+	b.keys = keys
 }

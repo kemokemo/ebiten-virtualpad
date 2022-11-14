@@ -17,20 +17,25 @@ func NewGame() *Game {
 
 	// vpad.Pressing is continuously triggered while this button is being pressed.
 	aButton := vpad.NewTriggerButton(a_button, vpad.Pressing, vpad.SelectColor)
+	aButton.SetTriggerButton([]ebiten.Key{ebiten.KeyA})
 	aButton.SetLocation(150, 190)
 
 	// vpad.JustRelease is triggered when this button is released.
 	bButton := vpad.NewTriggerButton(b_button, vpad.JustReleased, vpad.SelectColor)
+	bButton.SetTriggerButton([]ebiten.Key{ebiten.KeyB})
 	bButton.SetLocation(260, 190)
 
 	// vpad.JustPress is triggered when this button is pressed.
 	cButton := vpad.NewTriggerButton(c_button, vpad.JustPressed, vpad.SelectColor)
+	cButton.SetTriggerButton([]ebiten.Key{ebiten.KeyC})
 	cButton.SetLocation(370, 190)
 
 	slButton := vpad.NewSelectButton(c_button, vpad.JustReleased, vpad.SelectColor)
+	slButton.SetSelectKeys([]ebiten.Key{ebiten.KeyL})
 	slButton.SetLocation(205, 90)
 
 	srButton := vpad.NewSelectButton(c_button, vpad.JustPressed, vpad.SelectColor)
+	srButton.SetSelectKeys([]ebiten.Key{ebiten.KeyR})
 	srButton.SetLocation(315, 90)
 
 	return &Game{

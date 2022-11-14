@@ -17,6 +17,7 @@ type justReleasedSelectButton struct {
 	isSelected bool
 	touches    map[*touch]struct{}
 	cursP      image.Point
+	keys       []ebiten.Key
 }
 
 // SetLocation sets the location to draw this button.
@@ -59,6 +60,13 @@ func (b *justReleasedSelectButton) updateSelect() {
 		b.isSelected = !b.isSelected
 		return
 	}
+
+	for i := range b.keys {
+		if inpututil.IsKeyJustReleased(b.keys[i]) {
+			b.isSelected = !b.isSelected
+			return
+		}
+	}
 }
 
 func (b *justReleasedSelectButton) IsSelected() bool {
@@ -67,6 +75,10 @@ func (b *justReleasedSelectButton) IsSelected() bool {
 
 func (b *justReleasedSelectButton) SetSelectState(selected bool) {
 	b.isSelected = selected
+}
+
+func (b *justReleasedSelectButton) SetSelectKeys(keys []ebiten.Key) {
+	b.keys = keys
 }
 
 // Draw draws this button.

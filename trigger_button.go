@@ -11,6 +11,7 @@ type TriggerButton interface {
 	Update()
 	IsTriggered() bool
 	Draw(screen *ebiten.Image)
+	SetTriggerButton(keys []ebiten.Key)
 }
 
 // NewTriggerButton returns a new TriggerButton.

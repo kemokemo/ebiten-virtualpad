@@ -18,6 +18,7 @@ type pressingButton struct {
 	isTriggered bool
 	checkP      image.Point
 	cursP       image.Point
+	keys        []ebiten.Key
 }
 
 // SetLocation sets the location to draw this button.
@@ -54,6 +55,13 @@ func (b *pressingButton) updateSelect() {
 		b.isSelected = true
 		return
 	}
+
+	for i := range b.keys {
+		if inpututil.KeyPressDuration(b.keys[i]) > 0 {
+			b.isSelected = true
+			return
+		}
+	}
 }
 
 func (b *pressingButton) updateTrigger() {
@@ -74,6 +82,13 @@ func (b *pressingButton) updateTrigger() {
 		b.isTriggered = true
 		return
 	}
+
+	for i := range b.keys {
+		if inpututil.KeyPressDuration(b.keys[i]) > 0 {
+			b.isTriggered = true
+			return
+		}
+	}
 }
 
 // IsTriggered returns the state of this trigger is pressed.
@@ -89,4 +104,8 @@ func (b *pressingButton) Draw(screen *ebiten.Image) {
 	} else {
 		screen.DrawImage(b.baseImg, b.normalOp)
 	}
+}
+
+func (b *pressingButton) SetTriggerButton(keys []ebiten.Key) {
+	b.keys = keys
 }
