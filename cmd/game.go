@@ -28,9 +28,11 @@ func NewGame() *Game {
 	cButton.SetLocation(370, 190)
 
 	slButton := vpad.NewSelectButton(c_button, vpad.JustReleased, vpad.SelectColor)
+	slButton.SetSelectKeys([]ebiten.Key{ebiten.KeyL})
 	slButton.SetLocation(205, 90)
 
 	srButton := vpad.NewSelectButton(c_button, vpad.JustPressed, vpad.SelectColor)
+	srButton.SetSelectKeys([]ebiten.Key{ebiten.KeyR})
 	srButton.SetLocation(315, 90)
 
 	return &Game{
