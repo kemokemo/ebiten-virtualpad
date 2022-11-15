@@ -13,6 +13,7 @@ type SelectButton interface {
 	Draw(screen *ebiten.Image)
 	SetSelectState(selected bool)
 	SetSelectKeys(keys []ebiten.Key)
+	SetSelectImage(img *ebiten.Image)
 }
 
 // NewSelectButton returns a new SelectButton.

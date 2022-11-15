@@ -9,6 +9,7 @@ import (
 
 type justPressedSelectButton struct {
 	baseImg    *ebiten.Image
+	selectImg  *ebiten.Image
 	normalOp   *ebiten.DrawImageOptions
 	selectedOp *ebiten.DrawImageOptions
 	rectangle  image.Rectangle
@@ -69,8 +70,16 @@ func (b *justPressedSelectButton) SetSelectKeys(keys []ebiten.Key) {
 
 func (b *justPressedSelectButton) Draw(screen *ebiten.Image) {
 	if b.isSelected {
-		screen.DrawImage(b.baseImg, b.selectedOp)
+		if b.selectImg != nil {
+			screen.DrawImage(b.selectImg, b.selectedOp)
+		} else {
+			screen.DrawImage(b.baseImg, b.selectedOp)
+		}
 	} else {
 		screen.DrawImage(b.baseImg, b.normalOp)
 	}
+}
+
+func (b *justPressedSelectButton) SetSelectImage(img *ebiten.Image) {
+	b.selectImg = img
 }
